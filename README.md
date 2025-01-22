@@ -58,7 +58,6 @@ safebot-hub/
 ├── arduino-source/       # Código do firmware para o robô (código Arduino)
 │   ├── v1/               # Versão 1 do código Arduino
 │   └── v2/               # Versão 2 do código Arduino
-└── docker-compose.yml    # Arquivo de configuração do Docker para Mosquitto
 ```
 
 ---
