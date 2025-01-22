@@ -1,0 +1,38 @@
+# Node.js
+node_modules/
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+
+# .env file containing sensitive data (backend)
+.env
+
+# Build directories (frontend)
+build/
+dist/
+
+# IDEs
+.vscode/
+.idea/
+
+# Operating System files
+.DS_Store
+Thumbs.db
+
+# Arduino
+*.ino~
+*.bak
+*.hex
+*.elf
+*.eep
+*.cpp~
+
+# Logs
+*.log
+
+# Temporary files
+*.swp
+*.swo
+
+# System files
+*.DS_Store

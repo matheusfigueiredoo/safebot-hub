@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Modo de Manutenção</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #1a1a1a;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #fff;
+        }
+
+        .container {
+            background-color: #2a2a2a;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.5);
+            max-width: 600px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #ffcc00;
+            font-size: 36px;
+            margin-bottom: 15px; /* Diminui o espaçamento entre o título e o ícone */
+        }
+
+        p {
+            font-size: 18px;
+            color: #999;
+            margin-bottom: 20px;
+        }
+
+        label {
+            color: #ffcc00;
+            font-size: 18px;
+            margin-bottom: 10px;
+            display: block;
+            text-align: center;
+        }
+
+        .icon {
+            font-size: 60px; /* Aumenta o tamanho dos ícones */
+            margin-bottom: 10px;
+        }
+
+        .date-time-group {
+            display: center;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+        }
+
+
+
+        input[type="date"],
+        input[type="time"] {
+            background-color: #333;
+            border: none;
+            padding: 15px; /* Aumenta o padding para uma altura maior */
+            border-radius: 5px;
+            color: #fff;
+            font-size: 18px;
+            width: 100%;
+            text-align: center;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            appearance: none;
+        }
+
+        input[type="date"]::placeholder,
+        input[type="time"]::placeholder {
+            color: #999;
+        }
+
+        input[type="date"]:focus,
+        input[type="time"]:focus {
+            background-color: #444;
+        }
+
+        input[type="date"]:not(:placeholder-shown),
+        input[type="time"]:not(:placeholder-shown) {
+            color: #ffcc00;
+            text-align: center;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: #ffcc00;
+            color: #000;
+            padding: 15px 20px; /* Aumenta o padding do botão */
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 18px;
+            transition: background-color 0.3s ease;
+            cursor: pointer;
+            margin-top: 20px;
+            width: 100%; /* Faz o botão preencher toda a largura */
+        }
+
+        .btn:hover {
+            background-color: #e6b800;
+        }
+
+        #timer {
+            font-size: 24px;
+            color: #ffcc00;
+            margin-top: 20px;
+        }
+
+        /* Oculta a segunda parte inicialmente */
+        .hidden {
+            display: none;
+        }
+
+        /* Pop-up verde */
+        #popup {
+            display: none;
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #28a745;
+            color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            font-size: 18px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="section1">
+        <div class="icon">🛠️</div>
+        <h1>Estamos em Manutenção!</h1>
+        <p>Selecione até quando a manutenção será feita:</p>
+
+        <div class="date-time-group">
+            <div>
+                <label for="maintenanceDate">Dia:</label>
+                <input type="date" id="maintenanceDate" placeholder="dd/mm/aaaa">
+            </div>
+
+            <div>
+                <label for="maintenanceTime">Hora:</label>
+                <input type="time" id="maintenanceTime" placeholder="-- : --">
+            </div>
+        </div>
+
+        <a href="#" id="startBtn" class="btn">Iniciar Manutenção</a>
+    </div>
+
+    <div class="container hidden" id="section2">
+        <div class="icon">🕒</div>
+        <h1>Manutenção em Andamento</h1>
+        <p id="timer">Calculando tempo restante...</p>
+        <a href="menu.html" id="cancelBtn" class="btn">Cancelar e Voltar ao Menu</a>
+    </div>
+
+    <!-- Pop-up verde -->
+    <div id="popup">Manutenção concluída com sucesso! Redirecionando...</div>
+
+    <script>
+        // Referências aos elementos
+        const startBtn = document.getElementById('startBtn');
+        const maintenanceDate = document.getElementById('maintenanceDate');
+        const maintenanceTime = document.getElementById('maintenanceTime');
+        const section1 = document.getElementById('section1');
+        const section2 = document.getElementById('section2');
+        const timerDisplay = document.getElementById('timer');
+        const popup = document.getElementById('popup');
+        let interval;
+
+        // Função para iniciar a contagem regressiva
+        startBtn.addEventListener('click', function (e) {
+            e.preventDefault();
+            
+            const selectedDate = maintenanceDate.value;
+            const selectedTime = maintenanceTime.value;
+
+            if (!selectedDate || !selectedTime) {
+                alert('Por favor, selecione um dia e uma hora válidos.');
+                return;
+            }
+
+            const endTime = new Date(`${selectedDate}T${selectedTime}`);
+            const now = new Date();
+
+            if (endTime <= now) {
+                alert('Por favor, selecione um horário no futuro.');
+                return;
+            }
+
+            // Oculta a primeira seção e mostra a segunda
+            section1.classList.add('hidden');
+            section2.classList.remove('hidden');
+
+            startCountdown(endTime);
+        });
+
+        function startCountdown(endTime) {
+            clearInterval(interval);
+
+            interval = setInterval(function () {
+                const now = new Date();
+                const remainingTime = endTime - now;
+
+                if (remainingTime <= 0) {
+                    clearInterval(interval);
+                    showCompletionPopup();
+                    return;
+                }
+
+                // Calcula horas, minutos e segundos restantes
+                const hours = Math.floor((remainingTime / (1000 * 60 * 60)) % 24);
+                const minutes = Math.floor((remainingTime / (1000 * 60)) % 60);
+                const seconds = Math.floor((remainingTime / 1000) % 60);
+
+                timerDisplay.innerHTML = `Tempo restante: ${hours}h ${minutes}m ${seconds}s`;
+            }, 1000);
+        }
+
+        function showCompletionPopup() {
+            popup.style.display = 'block';
+
+            setTimeout(function () {
+                popup.style.display = 'none';
+                window.location.href = 'menu.html'; // Redireciona para o menu
+            }, 3000); // Mostra o pop-up por 3 segundos antes de redirecionar
+        }
+    </script>
+</body>
+</html>
+
+
