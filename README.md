@@ -93,7 +93,7 @@ Baixe e instale a **IDE do Arduino** a partir do site oficial:
 
 Após a instalação, siga as instruções para configurar o MQTT na placa **VESPA (RoboCore)** acessando o link abaixo:
 
-- [Configuração MQTT RoboCore](http://link-de-configuracao-mqtt-robocore.com)
+- [Configuração MQTT RoboCore](https://www.robocore.net/tutoriais/primeiros-passos-com-vespa?srsltid=AfmBOoq22rP2DPoq1rLbcL902274hmmtBQr246GL3fsH7XfL_TSp4nXX)
 
 ---
 
