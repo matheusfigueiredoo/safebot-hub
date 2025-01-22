@@ -22,11 +22,11 @@ const float distanceBetweenMarks = 0.104;
 const unsigned long debounceDelay = 5000; // 5 µs
 
 // ------------------- CONFIGURAÇÕES DE Wi-Fi -------------------
-const char* ssid     = "LIVE TIM_0371_2G";
-const char* password = "Rap0sinho0";
+const char* ssid     = " ";
+const char* password = " ";
 
 // ------------------- CONFIGURAÇÕES DE MQTT -------------------
-const char* mqtt_server          = "192.168.1.15"; 
+const char* mqtt_server          = " "; 
 const char* mqtt_topic_comandos  = "robo/comandos";
 const char* mqtt_topic_bateria   = "robo/bateria";
 const char* mqtt_topic_velocidade= "robo/velocidade";

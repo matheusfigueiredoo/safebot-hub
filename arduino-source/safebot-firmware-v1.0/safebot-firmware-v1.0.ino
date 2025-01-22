@@ -27,12 +27,16 @@ const char* ALIAS_DISTANCIA = "distancia";
 const char* ALIAS_VELOCIDADE = "velocidade";
 const char* ALIAS_VBAT = "vbat";
 
-// Configurações da rede Wi-Fi
-const char* ssid = "teste"; //Nome do Wi-Fi
-const char* password = "12345678"; //Senha do Wi-Fi
+// ------------------- CONFIGURAÇÕES DE Wi-Fi -------------------
+const char* ssid = " "; //Nome do Wi-Fi
+const char* password = " "; //Senha do Wi-Fi
 
-// Configurações do broker MQTT
-const char* mqtt_server = "192.168.227.58"; // IP ou URL do servidor MQTT (parte que deve ser mudada)
+
+
+// ------------------- CONFIGURAÇÕES DE MQTT -------------------
+const char* mqtt_server = " "; // IP OU URL do servidor MQTT (parte que deve ser mudada)
+
+
 const char* mqtt_topic_comandos = "robo/comandos";
 const char* mqtt_topic_bateria = "robo/bateria";
 const char* mqtt_topic_velocidade = "robo/velocidade";
