@@ -41,7 +41,7 @@ function stopMosquittoDocker() {
 startMosquittoDocker();
 
 // Conectando ao broker MQTT
-const mqttClient = mqtt.connect(" "); // Substitua pelo IP correto do broker
+const mqttClient = mqtt.connect("mqtt://192.168.137.1:1883"); // Substitua pelo IP correto do broker
 
 mqttClient.on("connect", () => {
   console.log("Conectado ao broker MQTT");
